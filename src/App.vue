@@ -1,6 +1,16 @@
 <template>
   <div id="app">
-    <BienAVendre v-for="bien in biensAAfficher" :key="bien.id" :titre="bien.titre" :type="bien.type" :contact="bien.contact" :prix="bien.prix"></BienAVendre>
+    <BienAVendre
+		v-for="bien in biensAAfficher"
+		:key="bien.id"
+		:titre="bien.titre"
+		:type="bien.type"
+		:contact="bien.contact"
+		:prix="bien.prix"
+		:vendu="bien.vendu"
+		:id="bien.id"
+		v-on:mise-a-jour="miseAJourBienAVendre"
+	></BienAVendre>
     <Label> Biens à vendre :
 	<input type="checkbox" v-model="filtre" >
 	</Label>
@@ -41,6 +51,11 @@ export default {
       this.biens = resultat.data
     });
   },
+  methods: {
+	  miseAJourBienAVendre(payload) {
+		  console.log(payload)
+	  }
+  }
   
 };
 </script>
