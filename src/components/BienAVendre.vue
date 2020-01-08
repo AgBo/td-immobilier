@@ -22,7 +22,7 @@ export default {
             required: true
         },
         prix: {
-            type: String,
+            type: Number,
             required: true
         },
         contact: {

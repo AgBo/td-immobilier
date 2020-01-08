@@ -1,12 +1,16 @@
 <template>
   <div id="app">
-    <BienAVendre v-for="bien in biens" :key="bien.id" :titre="bien.titre" :type="bien.type" :contact="bien.contact" :prix="bien.prix"></BienAVendre>
-  </div>
+    <BienAVendre v-for="bien in biensAAfficher" :key="bien.id" :titre="bien.titre" :type="bien.type" :contact="bien.contact" :prix="bien.prix"></BienAVendre>
+    <Label> Biens à vendre :
+	<input type="checkbox" v-model="filtre" >
+	</Label>
+	</div>
 </template>
 
 <script>
 import axios from "axios";
 import BienAVendre from "./components/BienAVendre";
+import { filter } from 'minimatch';
 
 export default {
   name: "app",
@@ -16,14 +20,28 @@ export default {
 
   data() {
     return {
-      biens: []
+      biens: [],
+      filtre: false
     };
+  },
+  computed: {
+    biensAVendre(){
+        return this.biens.filter(bien => bien.vendu===false);
+	},
+	biensAAfficher (){
+	if (this.filtre===false) {
+		return this.biens 
+	}	else {
+		return this.biensAVendre
+	}
+	}
   },
   created() {
     axios.get("http://localhost:3000/biens").then(resultat => {
-      this.biens = resultat.data;
+      this.biens = resultat.data
     });
-  }
+  },
+  
 };
 </script>
 
